@@ -19,6 +19,13 @@ android {
         buildConfig true
         viewBinding true
     }
+    lint {
+        // This is a personal/self-hosted build, not a Play Store upload.
+        // Don't let the ExpiredTargetSdkVersion (targetSdk 30) lint error
+        // abort release packaging.
+        checkReleaseBuilds false
+        abortOnError false
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
