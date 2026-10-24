@@ -61,6 +61,7 @@ import com.google.android.diskusage.filesystem.entity.FileSystemRoot;
 import com.google.android.diskusage.filesystem.entity.FileSystemSuperRoot;
 import com.google.android.diskusage.filesystem.entity.FileSystemSystemSpace;
 import com.google.android.diskusage.ui.common.ScanProgressDialog;
+import com.google.android.diskusage.ui.common.EdgeToEdge;
 import timber.log.Timber;
 
 import org.jetbrains.annotations.Contract;
@@ -98,6 +99,7 @@ public class DiskUsage extends LoadableActivity {
     Timber.d("DiskUsage.onCreate()");
     ActivityCommonBinding binding = ActivityCommonBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
+    EdgeToEdge.applySystemBarInsets(this);
     menu.onCreate(viewModel);
     Intent i = getIntent();
 

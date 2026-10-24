@@ -36,6 +36,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.google.android.diskusage.R;
 import com.google.android.diskusage.databinding.ActivityCommonBinding;
+import com.google.android.diskusage.ui.common.EdgeToEdge;
 import com.google.android.diskusage.filesystem.mnt.MountPoint;
 import splitties.toast.ToastKt;
 import timber.log.Timber;
@@ -50,6 +51,7 @@ public class PermissionRequestActivity extends Activity {
         super.onCreate(savedInstanceState);
         ActivityCommonBinding binding = ActivityCommonBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        EdgeToEdge.applySystemBarInsets(this);
         Intent i = getIntent();
 
         final String key = i.getStringExtra(DiskUsage.KEY_KEY);
