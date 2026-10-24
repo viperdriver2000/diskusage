@@ -66,8 +66,16 @@ public class PermissionRequestActivity extends Activity {
             finish();
             return;
         }
-        if ((!mountPoint.hasApps()) || isAccessGranted()) {
+        if (!mountPoint.hasApps()) {
             forwardToDiskUsage();
+            return;
+        }
+        if (isAccessGranted()) {
+            // Usage access only covers app sizes. Without all-files access the
+            // scan sees nothing but this app's own directories on Android 11+,
+            // so media (DCIM, downloads, ...) is missing and the graph shows
+            // the used space as free.
+            requestExternalStoragePermission();
             return;
         }
 
@@ -105,7 +113,10 @@ public class PermissionRequestActivity extends Activity {
                 if (Environment.isExternalStorageManager()) {
                     forwardToDiskUsage();
                 } else {
+                    // Nothing to scan without it: back to the mount list
+                    // instead of leaving an empty activity behind.
                     ToastKt.toast(R.string.dialog_external_storage_access_error);
+                    finish();
                 }
             }
         }
