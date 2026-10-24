@@ -29,6 +29,7 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import com.google.android.diskusage.R;
 import com.google.android.diskusage.databinding.ActivityCommonBinding;
+import com.google.android.diskusage.ui.common.EdgeToEdge;
 import com.google.android.diskusage.filesystem.entity.FileSystemEntry;
 import com.google.android.diskusage.filesystem.mnt.MountPoint;
 import com.google.android.diskusage.filesystem.mnt.RootMountPoint;
@@ -181,6 +182,7 @@ public class SelectActivity extends Activity {
     FileSystemEntry.setupStrings(this);
     ActivityCommonBinding binding = ActivityCommonBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
+    EdgeToEdge.applySystemBarInsets(this);
 //    ActionBar bar = getActionBar();
 //    bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_USE_LOGO);
   }

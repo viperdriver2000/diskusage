@@ -39,6 +39,13 @@ public class AppContextTest {
     }
 
     @Test
+    public void targetsAndroid16() throws Exception {
+        Context ctx = ApplicationProvider.getApplicationContext();
+        PackageInfo info = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
+        assertEquals("APK must target API 36 (Android 16)", 36, info.applicationInfo.targetSdkVersion);
+    }
+
+    @Test
     public void runsOnSupportedApiLevel() {
         int api = Build.VERSION.SDK_INT;
         // App declares minSdk 21; the test simply records the level it runs on.

@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.diskusage.R;
 import com.google.android.diskusage.databinding.DeleteViewBinding;
 import com.google.android.diskusage.filesystem.entity.FileSystemEntry;
+import com.google.android.diskusage.ui.common.EdgeToEdge;
 import com.google.android.diskusage.ui.common.FileInfo;
 import com.google.android.diskusage.ui.common.FileInfoAdapter;
 import timber.log.Timber;
@@ -56,6 +57,7 @@ public class DeleteActivity extends Activity {
 
     DeleteViewBinding binding = DeleteViewBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
+    EdgeToEdge.applySystemBarInsets(this);
     String sizeString = getIntent().getStringExtra(SIZE_KEY);
     int count = getIntent().getIntExtra(NUM_FILES_KEY, 0);
     final File file = new File(absolutePath);

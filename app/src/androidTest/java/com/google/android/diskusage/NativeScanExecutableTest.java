@@ -128,4 +128,61 @@ public class NativeScanExecutableTest {
                 + (error != null ? ", error=" + error.getMessage() : "")
                 + ", sample=" + out.substring(0, Math.min(80, out.length())).replace('\0', '.'));
     }
+
+    @Test
+    public void nativeBinaryIsAlignedFor16kbPages() throws Exception {
+        File bin = scanBinary();
+        assertTrue(bin.exists());
+
+        byte[] elf = new byte[(int) bin.length()];
+        try (InputStream is = new FileInputStream(bin)) {
+            int read = 0;
+            while (read < elf.length) {
+                int n = is.read(elf, read, elf.length - read);
+                if (n < 0) {
+                    break;
+                }
+                read += n;
+            }
+        }
+
+        // 32-bit devices only ever run 4 KB page kernels, so the 16 KB
+        // requirement applies to the 64-bit ABIs only.
+        if (elf[4] != 2) {
+            android.util.Log.i("DiskUsageTest", "32-bit ELF, 16 KB page alignment not required");
+            return;
+        }
+
+        long phoff = le64(elf, 0x20);
+        int phentsize = le16(elf, 0x36);
+        int phnum = le16(elf, 0x38);
+        assertEquals("Unexpected program header size", 56, phentsize);
+
+        long minLoadAlign = Long.MAX_VALUE;
+        for (int i = 0; i < phnum; i++) {
+            int base = (int) (phoff + (long) i * phentsize);
+            if (le32(elf, base) == 1 /* PT_LOAD */) {
+                minLoadAlign = Math.min(minLoadAlign, le64(elf, base + 48));
+            }
+        }
+
+        android.util.Log.i("DiskUsageTest", "libscan.so PT_LOAD p_align=0x"
+                + Long.toHexString(minLoadAlign) + ", ABI=" + Build.SUPPORTED_ABIS[0]);
+
+        assertTrue("libscan.so has no PT_LOAD segment", minLoadAlign != Long.MAX_VALUE);
+        assertTrue("libscan.so segments must be 16 KB aligned for Android 15+ 16 KB page"
+                + " devices, got 0x" + Long.toHexString(minLoadAlign), minLoadAlign >= 16384);
+    }
+
+    private static int le16(byte[] b, int off) {
+        return (b[off] & 0xFF) | ((b[off + 1] & 0xFF) << 8);
+    }
+
+    private static int le32(byte[] b, int off) {
+        return le16(b, off) | (le16(b, off + 2) << 16);
+    }
+
+    private static long le64(byte[] b, int off) {
+        return (le32(b, off) & 0xFFFFFFFFL) | ((long) le32(b, off + 4) << 32);
+    }
 }

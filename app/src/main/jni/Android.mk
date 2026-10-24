@@ -19,6 +19,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := scan
 LOCAL_SRC_FILES := scan.c
 
+# Android 15+ devices may run a 16 KB page-size kernel. This binary is executed
+# directly from the native library dir, so its segments have to be aligned for
+# both 4 KB and 16 KB pages; NDK r25 still defaults to 4 KB.
+LOCAL_LDFLAGS   := -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384
+
 # It seems that Google will not allow to run executable from app private
 # directory like `/data/data` or /data/user/0` since Android 10. A workaround
 # for this is that renaming executable like `libxxx.so`, and Gradle build

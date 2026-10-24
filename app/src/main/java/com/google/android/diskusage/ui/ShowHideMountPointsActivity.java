@@ -11,6 +11,7 @@ import com.google.android.diskusage.filesystem.entity.FileSystemEntry;
 import com.google.android.diskusage.filesystem.mnt.MountPoint;
 import com.google.android.diskusage.filesystem.mnt.RootMountPoint;
 import com.google.android.diskusage.ui.DiskUsage.FileSystemStats;
+import com.google.android.diskusage.ui.common.EdgeToEdge;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +21,7 @@ public class ShowHideMountPointsActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.mount_points_ignore_list);
+        EdgeToEdge.applySystemBarInsets(this);
         getPreferenceScreen().setOrderingAsAdded(true);
     }
 
