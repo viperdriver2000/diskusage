@@ -77,7 +77,10 @@
 <string name="ask_view">View</string>
 <string name="dialog_usage_access_title">Usage Access Permission Needed</string>
 <string name="dialog_usage_access_desc">Allow DiskUsage to get list of installed apps?</string>
-<string name="dialog_external_storage_access_error">Access to external storage has been denied.</string>
+<string name="dialog_external_storage_access_title">All files access needed</string>
+<string name="dialog_external_storage_access_desc">DiskUsage needs “All files access” to see every folder. If the switch is greyed out, allow restricted settings first: App info › ⋮ › Allow restricted settings.</string>
+<string name="button_open_app_info">App info</string>
+<string name="button_retry">Try again</string>
     <string name="dialog_ask_filemanager_title">Missing compatible file manager</string>
     <string name="dialog_ask_filemanager_desc">No compatible filemanager found.\n\nAsk you favorite file manager developer for integration with DiskUsage or install:\n * Solid Explorer\n * OI File Manager</string>
     <string name="button_install_filemanager">Install Solid Explorer</string>

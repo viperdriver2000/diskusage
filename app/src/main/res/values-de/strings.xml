@@ -85,4 +85,8 @@
   <string name="graph_free_space">Frei</string>
   <string name="graph_system_data">Systemdaten</string>
     <string name="ask_view">Auswahl</string>
+  <string name="dialog_external_storage_access_title">„Alle Dateien zulassen“ nötig</string>
+  <string name="dialog_external_storage_access_desc">DiskUsage braucht „Alle Dateien zulassen“, um alle Ordner zu sehen. Ist der Schalter ausgegraut, erlaube zuerst eingeschränkte Einstellungen: App-Info › ⋮ › Eingeschränkte Einstellungen zulassen.</string>
+  <string name="button_open_app_info">App-Info</string>
+  <string name="button_retry">Erneut versuchen</string>
 </resources>

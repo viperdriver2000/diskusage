@@ -77,7 +77,6 @@
 <string name="ask_view">Podgląd</string>
 <string name="dialog_usage_access_title">Wymagane uprawnienie dostępu do użytkowania</string>
 <string name="dialog_usage_access_desc">Zezwolić DiskUsage na uzyskanie listy zainstalowanych aplikacji?</string>
-<string name="dialog_external_storage_access_error">Odmówiono dostępu do pamięci zewnętrznej.</string>
     <string name="dialog_ask_filemanager_title">Brak zgodnego menedżera plików</string>
     <string name="dialog_ask_filemanager_desc">Nie znaleziono zgodnego menedżera plików.\n\nPoproś swojego ulubionego dewelopera menedżerów plików o integrację z DiskUsage lub zainstaluj:\n * Solid Explorer\n * Menedżer plików OI</string>
     <string name="button_install_filemanager">Install Solid Explorer</string>

@@ -38,7 +38,6 @@ import com.google.android.diskusage.R;
 import com.google.android.diskusage.databinding.ActivityCommonBinding;
 import com.google.android.diskusage.ui.common.EdgeToEdge;
 import com.google.android.diskusage.filesystem.mnt.MountPoint;
-import splitties.toast.ToastKt;
 import timber.log.Timber;
 
 public class PermissionRequestActivity extends Activity {
@@ -113,12 +112,37 @@ public class PermissionRequestActivity extends Activity {
                 if (Environment.isExternalStorageManager()) {
                     forwardToDiskUsage();
                 } else {
-                    // Nothing to scan without it: back to the mount list
-                    // instead of leaving an empty activity behind.
-                    ToastKt.toast(R.string.dialog_external_storage_access_error);
-                    finish();
+                    showAllFilesAccessHelp();
                 }
             }
+        }
+    }
+
+    /**
+     * The all-files switch is greyed out for apps installed from outside an app
+     * store until "Allow restricted settings" is enabled in the app info menu.
+     * That state has no API to query, so point the user at it instead of only
+     * reporting that access is missing.
+     */
+    private void showAllFilesAccessHelp() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_external_storage_access_title)
+                .setMessage(R.string.dialog_external_storage_access_desc)
+                .setPositiveButton(R.string.button_open_app_info, (dialog, which) -> openAppInfo())
+                .setNeutralButton(R.string.button_retry, (dialog, which) ->
+                        requestExternalStoragePermission())
+                .setNegativeButton(R.string.button_cancel, (dialog, which) -> finish())
+                .show();
+    }
+
+    private void openAppInfo() {
+        try {
+            startActivityForResult(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:" + getPackageName())),
+                    PERMISSION_REQUEST_EXTERNAL_STORAGE_CODE);
+        } catch (Exception e) {
+            Log.d("diskusage", "failed to open app info", e);
+            finish();
         }
     }
 
